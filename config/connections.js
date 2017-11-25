@@ -32,6 +32,15 @@ module.exports.connections = {
     adapter: 'sails-disk'
   },
 
+  mongolabs: {
+    adapter: 'sails-mongo',
+    host: process.env.mogul_mongo_host, // defaults to `localhost` if omitted
+    port: process.env.mogul_mongo_port, // defaults to 27017 if omitted
+    user: process.env.mogul_mongo_username, // or omit if not relevant
+    password: process.env.mogul_mongo_password, // or omit if not relevant
+    database: process.env.mogul_mongo_database // or omit if not relevant
+  },
+
   /***************************************************************************
   *                                                                          *
   * MySQL is the world's most popular relational database.                   *
