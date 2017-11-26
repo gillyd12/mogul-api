@@ -21,9 +21,6 @@ module.exports.bootstrap = function (cb) {
   var sheet_name_list = workbook.SheetNames;
   var xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
 
-  // normalize data
-  var trimmedDataSet = [];
-
   _.forEach(xlData, function (values) {
     var obj = {};
     "use strict";
@@ -31,7 +28,6 @@ module.exports.bootstrap = function (cb) {
     _.forEach(propNames, function (value, key) {
       obj[_.trim(value)] = _.trim(values[value]);
     })
-    // trimmedDataSet.push(obj);
 
     async.series([
       function (callback) {
@@ -52,18 +48,16 @@ module.exports.bootstrap = function (cb) {
             // college: obj['Exp.']
           }, obj)
           .then(function (data) {
-            var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-            var identity = Player.identity;
 
-            // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-            // primary_key = data.id;
-            return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
-              .then(function (data) {
-                sails.log.info('keyModel ' + data.id + " created");
-              })
-              .catch(function (error) {
-                sails.log.error(error);
-              })
+            // var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
+            // var identity = Player.identity;
+            // return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
+            //   .then(function (data) {
+            //     sails.log.info('keyModel ' + data.id + " created");
+            //   })
+            //   .catch(function (error) {
+            //     sails.log.error(error);
+            //   })
 
           })
           .catch(function (error) {
@@ -88,23 +82,21 @@ module.exports.bootstrap = function (cb) {
             seeking: obj['Seeking']
           }, obj)
           .then(function (data) {
+
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Contract.identity;
+            var primary_key = data.id;
 
-            return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
+            return Player.find({player_id: player_id}).populate('contract')
               .then(function (data) {
-                sails.log.info('keyModel ' + data.id + " created");
-                return Player.update({player_id: player_id}, {contract: data.primary_key})
-                  .then(function (data) {
-                    sails.log.info('key added ' + data[0].id + " created");
-                  })
-                  .catch(function (error) {
-                    sails.log.error(error);
-                  })
+                data[0].contract.add([primary_key]);
+                data[0].save(sails.log.info);
+                sails.log.info('key added ' + data[0].id + " created");
               })
               .catch(function (error) {
                 sails.log.error(error);
               })
+
           })
           .catch(function (error) {
             sails.log.error(error);
@@ -123,19 +115,17 @@ module.exports.bootstrap = function (cb) {
             defense: obj['Def']
           }, obj)
           .then(function (data) {
+
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Defense.identity;
 
-            return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
+            var primary_key = data.id;
+
+            return Player.find({player_id: player_id}).populate('defense')
               .then(function (data) {
-                sails.log.info('keyModel ' + data.id + " created");
-                return Player.update({player_id: player_id}, {defense: data.primary_key})
-                  .then(function (data) {
-                    sails.log.info('key added ' + data[0].id + " created");
-                  })
-                  .catch(function (error) {
-                    sails.log.error(error);
-                  })
+                data[0].defense.add([primary_key]);
+                data[0].save(sails.log.info);
+                sails.log.info('key added ' + data[0].id + " created");
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -161,16 +151,13 @@ module.exports.bootstrap = function (cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Offense.identity;
 
-            return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
+            var primary_key = data.id;
+
+            return Player.find({player_id: player_id}).populate('offense')
               .then(function (data) {
-                sails.log.info('keyModel ' + data.id + " created");
-                return Player.update({player_id: player_id}, {offense: data.primary_key})
-                  .then(function (data) {
-                    sails.log.info('key added ' + data[0].id + " created");
-                  })
-                  .catch(function (error) {
-                    sails.log.error(error);
-                  })
+                data[0].offense.add([primary_key]);
+                data[0].save(sails.log.info);
+                sails.log.info('key added ' + data[0].id + " created");
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -201,16 +188,13 @@ module.exports.bootstrap = function (cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Pitching.identity;
 
-            return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
+            var primary_key = data.id;
+
+            return Player.find({player_id: player_id}).populate('pitching')
               .then(function (data) {
-                sails.log.info('keyModel ' + data.id + " created");
-                return Player.update({player_id: player_id}, {pitching: data.primary_key})
-                  .then(function (data) {
-                    sails.log.info('key added ' + data[0].id + " created");
-                  })
-                  .catch(function (error) {
-                    sails.log.error(error);
-                  })
+                data[0].pitching.add([primary_key]);
+                data[0].save(sails.log.info);
+                sails.log.info('key added ' + data[0].id + " created");
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -237,16 +221,9 @@ module.exports.bootstrap = function (cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Profile.identity;
 
-            return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
+            return Player.update({player_id: player_id}, {profile: data.id})
               .then(function (data) {
-                sails.log.info('keyModel ' + data.id + " created");
-                return Player.update({player_id: player_id}, {profile: data.primary_key})
-                  .then(function (data) {
-                    sails.log.info('key added ' + data[0].id + " created");
-                  })
-                  .catch(function (error) {
-                    sails.log.error(error);
-                  })
+                sails.log.info('key added ' + data[0].id + " created");
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -274,16 +251,13 @@ module.exports.bootstrap = function (cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Rating.identity;
 
-            return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
+            var primary_key = data.id;
+
+            return Player.find({player_id: player_id}).populate('rating')
               .then(function (data) {
-                sails.log.info('keyModel ' + data.id + " created");
-                return Player.update({player_id: player_id}, {rating: data.primary_key})
-                  .then(function (data) {
-                    sails.log.info('key added ' + data[0].id + " created");
-                  })
-                  .catch(function (error) {
-                    sails.log.error(error);
-                  })
+                data[0].rating.add([primary_key]);
+                data[0].save(sails.log.info);
+                sails.log.info('key added ' + data[0].id + " created");
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -307,16 +281,13 @@ module.exports.bootstrap = function (cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Status.identity;
 
-            return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
+            var primary_key = data.id;
+
+            return Player.find({player_id: player_id}).populate('status')
               .then(function (data) {
-                sails.log.info('keyModel ' + data.id + " created");
-                return Player.update({player_id: player_id}, {status: data.primary_key})
-                  .then(function (data) {
-                    sails.log.info('key added ' + data[0].id + " created");
-                  })
-                  .catch(function (error) {
-                    sails.log.error(error);
-                  })
+                data[0].status.add([primary_key]);
+                data[0].save(sails.log.info);
+                sails.log.info('key added ' + data[0].id + " created");
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -347,16 +318,9 @@ module.exports.bootstrap = function (cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Vitals.identity;
 
-            return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
+            return Player.update({player_id: player_id}, {vitals: data.id})
               .then(function (data) {
-                sails.log.info('keyModel ' + data.id + " created");
-                return Player.update({player_id: player_id}, {vitals: data.primary_key})
-                  .then(function (data) {
-                    sails.log.info('key added ' + data[0].id + " created");
-                  })
-                  .catch(function (error) {
-                    sails.log.error(error);
-                  })
+                sails.log.info('key added ' + data[0].id + " created");
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -377,442 +341,3 @@ module.exports.bootstrap = function (cb) {
 
   cb();
 };
-
-//     DataService.load(Player,
-//       {
-//         name: obj['Player Name']
-//         // player_id: obj['Player Name'] + obj['Born'] + obj['Weight']
-//         // age: obj['Age'],
-//         // height: obj['Height'],
-//         // weight: obj['Weight'],
-//         // year_born: obj['Born']
-//         // month_born: obj['Exp.'],
-//         // day_born: obj['Exp.'],
-//         // home_country: obj['Exp.'],
-//         // home_state: obj['MLB Service'],
-//         // home_city: obj['Exp.'],
-//         // college: obj['Exp.']
-//       }, obj)
-//       .then(function (data) {
-//         var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-//         var identity = Player.identity;
-//
-//         // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-//         // primary_key = data.id;
-//         return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
-//           .then(function (data) {
-//             sails.log.info('keyModel ' + data.id + " created");
-//           })
-//           .catch(function (error) {
-//             sails.log.error(error);
-//           })
-//       })
-//       .catch(function (error) {
-//         sails.log.error(error);
-//       });
-//
-//     DataService.load(Contract,
-//       {
-//       type: obj['Contract'],
-//       salary: obj['Salary'],
-//       years: obj['Years'],
-//       arbitration: obj['Arbitration'],
-//       free_agency: obj['Free Agency'],
-//       organizational_roster: obj['Team'],
-//       player_option: obj['Player Option'],
-//       team_option: obj['Team Option'],
-//       no_trade: obj['No Trade'],
-//       seeking: obj['Seeking']
-//     }, obj)
-//       .then(function (data) {
-//         var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-//         var identity = Contract.identity;
-//
-//         // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-//         // primary_key = data.id;
-//         return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
-//           .then(function (data) {
-//             sails.log.info('keyModel ' + data.id + " created");
-//           })
-//           .catch(function (error) {
-//             sails.log.error(error);
-//           })
-//       })
-//       .catch(function (error) {
-//         sails.log.error(error);
-//       });
-//
-//     DataService.load(Defense,
-//       {
-//         arm: obj['Arm'],
-//         range: obj['Rng'],
-//         fielding: obj['Fld'],
-//         handling: obj['Han'],
-//         defense: obj['Def']
-//       }, obj)
-//       .then(function (data) {
-//         var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-//         var identity = Defense.identity;
-//
-//         // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-//         // primary_key = data.id;
-//         return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
-//           .then(function (data) {
-//             sails.log.info('keyModel ' + data.id + " created");
-//           })
-//           .catch(function (error) {
-//             sails.log.error(error);
-//           })
-//       })
-//       .catch(function (error) {
-//         sails.log.error(error);
-//       });
-//
-//     DataService.load(Offense,
-//       {
-//         contact: obj['Con'],
-//         power: obj['Pow'],
-//         speed: obj['Spd'],
-//         eye: obj['Eye'],
-//         bunt: obj['Bunt']
-//       }, obj)
-//       .then(function (data) {
-//         var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-//         var identity = Offense.identity;
-//
-//         // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-//         // primary_key = data.id;
-//         return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
-//           .then(function (data) {
-//             sails.log.info('keyModel ' + data.id + " created");
-//           })
-//           .catch(function (error) {
-//             sails.log.error(error);
-//           })
-//       })
-//       .catch(function (error) {
-//         sails.log.error(error);
-//       });
-//
-//     DataService.load(Pitching,
-//       {
-//         endurance: obj['End'],
-//         // control: obj['Con'], need array number, duplicate with offense
-//         // power: obj['Pow'], need array number, duplicate with offense
-//         movement: obj['Mov'],
-//         mph: obj['MPH'],
-//         pitch_1: obj['#1 Pitch'],
-//         pitch_2: obj['#2 Pitch'],
-//         pitch_3: obj['#3 Pitch'],
-//         pitch_4: obj['#4 Pitch'],
-//         pitch_5: obj['#5 Pitch']
-//       }, obj)
-//       .then(function (data) {
-//         var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-//         var identity = Pitching.identity;
-//
-//         // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-//         // primary_key = data.id;
-//         return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
-//           .then(function (data) {
-//             sails.log.info('keyModel ' + data.id + " created");
-//           })
-//           .catch(function (error) {
-//             sails.log.error(error);
-//           })
-//       })
-//       .catch(function (error) {
-//         sails.log.error(error);
-//       });
-//
-//     DataService.load(Profile,
-//       {
-//         position: obj['P'],
-//         bats: obj['B'],
-//         throws: obj['T'],
-//         draft_year: obj['Draft Year'],
-//         debut_date: obj['Debut Date'],
-//         debut_age: obj['Debut Age']
-//       }, obj)
-//       .then(function (data) {
-//         var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-//         var identity = Profile.identity;
-//
-//         // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-//         // primary_key = data.id;
-//         return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
-//           .then(function (data) {
-//             sails.log.info('keyModel ' + data.id + " created");
-//           })
-//           .catch(function (error) {
-//             sails.log.error(error);
-//           })
-//       })
-//       .catch(function (error) {
-//         sails.log.error(error);
-//       });
-//
-//     DataService.load(Rating,
-//       {
-//         peak_at_draft: obj['Peak @ Draft'],
-//         overall: obj['Overall'],
-//         peak: obj['Peak'],
-//         upside: obj['Upside'],
-//         health: obj['Health'],
-//         happiness: obj['Happiness'],
-//         scouting: obj['Scouting']
-//       }, obj)
-//       .then(function (data) {
-//         var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-//         var identity = Rating.identity;
-//
-//         // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-//         // primary_key = data.id;
-//         return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
-//           .then(function (data) {
-//             sails.log.info('keyModel ' + data.id + " created");
-//           })
-//           .catch(function (error) {
-//             sails.log.error(error);
-//           })
-//       })
-//       .catch(function (error) {
-//         sails.log.error(error);
-//       });
-//
-//     DataService.load(Status,
-//       {
-//         injury_time: obj['Injured'],
-//         years_played: obj['Exp.'],
-//         mlb_service: obj['MLB Service']
-//       }, obj)
-//       .then(function (data) {
-//         var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-//         var identity = Status.identity;
-//
-//         // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-//         // primary_key = data.id;
-//         return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
-//           .then(function (data) {
-//             sails.log.info('keyModel ' + data.id + " created");
-//           })
-//           .catch(function (error) {
-//             sails.log.error(error);
-//           })
-//       })
-//       .catch(function (error) {
-//         sails.log.error(error);
-//       });
-//
-//     DataService.load(Vitals,
-//       {
-//         age: obj['Age'],
-//         height: obj['Height'],
-//         weight: obj['Weight'],
-//         year_born: obj['Born'],
-//         // month_born: obj['Exp.'],
-//         // day_born: obj['Exp.'],
-//         // home_country: obj['Exp.'],
-//         // home_state: obj['MLB Service'],
-//         // home_city: obj['Exp.'],
-//         // college: obj['Exp.']
-//       }, obj)
-//       .then(function (data) {
-//         var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-//         var identity = Vitals.identity;
-//
-//         // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-//         // primary_key = data.id;
-//         return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
-//           .then(function (data) {
-//             sails.log.info('keyModel ' + data.id + " created");
-//           })
-//           .catch(function (error) {
-//             sails.log.error(error);
-//           })
-//       })
-//       .catch(function (error) {
-//         sails.log.error(error);
-//       });
-//
-//   });
-//
-//   cb();
-// };
-
-// module.exports.bootstrap = function(cb) {
-//
-//   // It's very important to trigger this callback method when you are finished
-//   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-//
-//   // parse data
-//   var workbook = XLSX.readFile('input/test-min.xls');
-//   var sheet_name_list = workbook.SheetNames;
-//   var xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
-//
-//   // normalize data
-//   var trimmedDataSet = [];
-//
-//   _.forEach(xlData, function(values) {
-//     var obj = {};
-//     "use strict";
-//     var propNames = Object.getOwnPropertyNames(values);
-//     _.forEach(propNames, function(value, key) {
-//       obj[_.trim(value)] = _.trim(values[value]);
-//     })
-//     // trimmedDataSet.push(obj);
-//
-//     DataService.load(Player,
-//       {
-//         name: obj['Player Name']
-//         // player_id: obj['Player Name'] + obj['Born'] + obj['Weight']
-//         // age: obj['Age'],
-//         // height: obj['Height'],
-//         // weight: obj['Weight'],
-//         // year_born: obj['Born']
-//         // month_born: obj['Exp.'],
-//         // day_born: obj['Exp.'],
-//         // home_country: obj['Exp.'],
-//         // home_state: obj['MLB Service'],
-//         // home_city: obj['Exp.'],
-//         // college: obj['Exp.']
-//       }, obj);
-//
-//     DataService.load(Contract,
-//       {
-//         type: obj['Contract'],
-//         salary: obj['Salary'],
-//         years: obj['Years'],
-//         arbitration: obj['Arbitration'],
-//         free_agency: obj['Free Agency'],
-//         organizational_roster: obj['Team'],
-//         player_option: obj['Player Option'],
-//         team_option: obj['Team Option'],
-//         no_trade: obj['No Trade'],
-//         seeking: obj['Seeking']
-//       }, obj);
-//
-//     DataService.load(Defense,
-//       {
-//         arm: obj['Arm'],
-//         range: obj['Rng'],
-//         fielding: obj['Fld'],
-//         handling: obj['Han'],
-//         defense: obj['Def']
-//       }, obj);
-//
-//     DataService.load(Offense,
-//       {
-//         contact: obj['Con'],
-//         power: obj['Pow'],
-//         speed: obj['Spd'],
-//         eye: obj['Eye'],
-//         bunt: obj['Bunt']
-//       }, obj);
-//
-//     DataService.load(Pitching,
-//       {
-//         endurance: obj['End'],
-//         // control: obj['Con'], need array number, duplicate with offense
-//         // power: obj['Pow'], need array number, duplicate with offense
-//         movement: obj['Mov'],
-//         mph: obj['MPH'],
-//         pitch_1: obj['#1 Pitch'],
-//         pitch_2: obj['#2 Pitch'],
-//         pitch_3: obj['#3 Pitch'],
-//         pitch_4: obj['#4 Pitch'],
-//         pitch_5: obj['#5 Pitch']
-//       }, obj);
-//
-//     DataService.load(Profile,
-//       {
-//         position: obj['P'],
-//         bats: obj['B'],
-//         throws: obj['T'],
-//         draft_year: obj['Draft Year'],
-//         debut_date: obj['Debut Date'],
-//         debut_age: obj['Debut Age']
-//       }, obj);
-//
-//     DataService.load(Rating,
-//       {
-//         peak_at_draft: obj['Peak @ Draft'],
-//         overall: obj['Overall'],
-//         peak: obj['Peak'],
-//         upside: obj['Upside'],
-//         health: obj['Health'],
-//         happiness: obj['Happiness'],
-//         scouting: obj['Scouting']
-//       }, obj);
-//
-//     DataService.load(Status,
-//       {
-//         injury_time: obj['Injured'],
-//         years_played: obj['Exp.'],
-//         mlb_service: obj['MLB Service']
-//       }, obj);
-//
-//     DataService.load(Vitals,
-//       {
-//         age: obj['Age'],
-//         height: obj['Height'],
-//         weight: obj['Weight'],
-//         year_born: obj['Born'],
-//         // month_born: obj['Exp.'],
-//         // day_born: obj['Exp.'],
-//         // home_country: obj['Exp.'],
-//         // home_state: obj['MLB Service'],
-//         // home_city: obj['Exp.'],
-//         // college: obj['Exp.']
-//       }, obj);
-//
-//   });
-//
-//   cb();
-// };
-
-
-// var dataService = require("../api/services/DataTransferService");
-// var parser = require("../api/services/ParserService");
-//
-// module.exports.bootstrap = function (cb) {
-//
-//   async.series([
-//     function (callback) {
-//       sails.log.info('Loading League');
-//       League.init(callback, ['AL', 'NL']);
-//     },
-//     function (callback) {
-//       sails.log.info('Loading Team');
-//       Team.init(callback);
-//     },
-//     function (callback) {
-//       sails.log.info('Loading Game');
-//       dataService.reload(callback, Game);
-//     },
-//     function (callback) {
-//       sails.log.info('Loading Statistic');
-//       dataService.reload(callback, Statistic);
-//     },
-//     function (callback) {
-//       sails.log.info('Loading Record');
-//       dataService.reload(callback, Record);
-//     },
-//     // function (callback) {
-//     //   sails.log.info('Record was loaded.');
-//     //   dataService.reload(callback, Player);
-//     // },
-//     // function (callback) {
-//     //   sails.log.info('Player was loaded.');
-//     //   dataService.reload(callback, Participant);
-//     // },
-//     // function (callback) {
-//     //   sails.log.info('Participant was loaded.');
-//     //   parser.moveDirectoryContent(callback, "input", "output");
-//     // },
-//     function (callback) {
-//       sails.log.info('Parsing is completed.');
-//       return cb();
-//     }
-//   ])
-// };

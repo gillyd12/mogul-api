@@ -10,7 +10,8 @@ module.exports = {
   attributes : {
 
     player_id: {
-      type: 'string'
+      type: 'string',
+      unique: true
     },
 
     name: {
@@ -26,7 +27,7 @@ module.exports = {
     },
 
     contract: {
-      collection: 'contract',
+      collection: 'contract'
     },
 
     rating: {
@@ -48,51 +49,6 @@ module.exports = {
     pitching: {
       collection: 'pitching',
     }
-
-    // player : {
-    //
-    //   // 1 to 1
-    //   vitals: {
-    //     via: "player"
-    //   },
-    //
-    //   // 1 to 1
-    //   profile : {
-    //   },
-    //
-    //   // 1 to N
-    //   status : {
-    //   },
-    //
-    //   // 1 to N
-    //   contract : {
-    //   },
-    //
-    //   // 1 to N
-    //   rating : {
-    //
-    //     offense : {
-    //
-    //     },
-    //
-    //     defense : {
-    //
-    //     },
-    //
-    //     pitching : {
-    //
-    //     }
-    //
-    //   },
-    //
-    //   // 1 to N
-    //   // stats : {
-    //   //
-    //   //   games_played : { type: 'number'}
-    //   //
-    //   // }
-    //
-    // }
 
   }
 

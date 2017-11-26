@@ -23,11 +23,7 @@ module.exports = {
 
     player_id: {
       type: 'string'
-    },
-
-    // player: {
-    //   model: 'player'
-    // }
+    }
 
   }
 };

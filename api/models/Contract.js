@@ -24,6 +24,9 @@ module.exports = {
       type: 'string'
     },
 
+    // player: {
+    //   model: 'player'
+    // }
 
   }
 };

@@ -7,8 +7,6 @@
 
 module.exports = {
 
-
-
   /**
    * `PlayerController.name()`
    */
@@ -25,9 +23,6 @@ module.exports = {
         "use strict";
         return res.json(players);
       })
-        // return res.json({
-        //   todo: 'name() is not implemented yet!'
-        // });
   }
 
 };
