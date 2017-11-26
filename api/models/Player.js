@@ -19,7 +19,36 @@ module.exports = {
 
     vitals: {
       model: 'vitals',
+    },
+
+    profile: {
+      model: 'profile',
+    },
+
+    contract: {
+      collection: 'contract',
+    },
+
+    rating: {
+      collection: 'rating',
+    },
+
+    status: {
+      collection: 'status',
+    },
+
+    offense: {
+      collection: 'offense',
+    },
+
+    defense: {
+      collection: 'defense',
+    },
+
+    pitching: {
+      collection: 'pitching',
     }
+
     // player : {
     //
     //   // 1 to 1

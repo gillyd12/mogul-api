@@ -20,13 +20,14 @@ module.exports = {
     home_state : { type: 'string' },
     home_city : { type: 'string' },
     college : { type: 'string' },
+
     player_id: {
       type: 'string'
     },
 
-    player: {
-      model: 'player'
-    }
+    // player: {
+    //   model: 'player'
+    // }
 
   }
 };

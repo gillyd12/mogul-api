@@ -11,7 +11,7 @@
 
 var XLSX = require('xlsx');
 
-module.exports.bootstrap = function(cb) {
+module.exports.bootstrap = function (cb) {
 
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
@@ -38,8 +38,8 @@ module.exports.bootstrap = function(cb) {
         sails.log.info('Loading Player');
         DataService.load(Player,
           {
-            name: obj['Player Name']
-            // player_id: obj['Player Name'] + obj['Born'] + obj['Weight']
+            name: obj['Player Name'],
+            player_id: obj['Player Name'] + obj['Born'] + obj['Weight']
             // age: obj['Age'],
             // height: obj['Height'],
             // weight: obj['Weight'],
@@ -91,11 +91,16 @@ module.exports.bootstrap = function(cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Contract.identity;
 
-            // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-            // primary_key = data.id;
             return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
               .then(function (data) {
                 sails.log.info('keyModel ' + data.id + " created");
+                return Player.update({player_id: player_id}, {contract: data.primary_key})
+                  .then(function (data) {
+                    sails.log.info('key added ' + data[0].id + " created");
+                  })
+                  .catch(function (error) {
+                    sails.log.error(error);
+                  })
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -121,11 +126,16 @@ module.exports.bootstrap = function(cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Defense.identity;
 
-            // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-            // primary_key = data.id;
             return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
               .then(function (data) {
                 sails.log.info('keyModel ' + data.id + " created");
+                return Player.update({player_id: player_id}, {defense: data.primary_key})
+                  .then(function (data) {
+                    sails.log.info('key added ' + data[0].id + " created");
+                  })
+                  .catch(function (error) {
+                    sails.log.error(error);
+                  })
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -151,11 +161,16 @@ module.exports.bootstrap = function(cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Offense.identity;
 
-            // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-            // primary_key = data.id;
             return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
               .then(function (data) {
                 sails.log.info('keyModel ' + data.id + " created");
+                return Player.update({player_id: player_id}, {offense: data.primary_key})
+                  .then(function (data) {
+                    sails.log.info('key added ' + data[0].id + " created");
+                  })
+                  .catch(function (error) {
+                    sails.log.error(error);
+                  })
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -186,11 +201,16 @@ module.exports.bootstrap = function(cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Pitching.identity;
 
-            // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-            // primary_key = data.id;
             return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
               .then(function (data) {
                 sails.log.info('keyModel ' + data.id + " created");
+                return Player.update({player_id: player_id}, {pitching: data.primary_key})
+                  .then(function (data) {
+                    sails.log.info('key added ' + data[0].id + " created");
+                  })
+                  .catch(function (error) {
+                    sails.log.error(error);
+                  })
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -217,11 +237,16 @@ module.exports.bootstrap = function(cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Profile.identity;
 
-            // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-            // primary_key = data.id;
             return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
               .then(function (data) {
                 sails.log.info('keyModel ' + data.id + " created");
+                return Player.update({player_id: player_id}, {profile: data.primary_key})
+                  .then(function (data) {
+                    sails.log.info('key added ' + data[0].id + " created");
+                  })
+                  .catch(function (error) {
+                    sails.log.error(error);
+                  })
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -249,11 +274,16 @@ module.exports.bootstrap = function(cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Rating.identity;
 
-            // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-            // primary_key = data.id;
             return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
               .then(function (data) {
                 sails.log.info('keyModel ' + data.id + " created");
+                return Player.update({player_id: player_id}, {rating: data.primary_key})
+                  .then(function (data) {
+                    sails.log.info('key added ' + data[0].id + " created");
+                  })
+                  .catch(function (error) {
+                    sails.log.error(error);
+                  })
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -277,11 +307,16 @@ module.exports.bootstrap = function(cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Status.identity;
 
-            // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-            // primary_key = data.id;
             return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
               .then(function (data) {
                 sails.log.info('keyModel ' + data.id + " created");
+                return Player.update({player_id: player_id}, {status: data.primary_key})
+                  .then(function (data) {
+                    sails.log.info('key added ' + data[0].id + " created");
+                  })
+                  .catch(function (error) {
+                    sails.log.error(error);
+                  })
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -312,11 +347,16 @@ module.exports.bootstrap = function(cb) {
             var player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
             var identity = Vitals.identity;
 
-            // sails.log.info(this.keyModel.identity + " " + data.id + " created");
-            // primary_key = data.id;
             return Keys.create({player_id: player_id, primary_key: data.id, identity: identity})
               .then(function (data) {
                 sails.log.info('keyModel ' + data.id + " created");
+                return Player.update({player_id: player_id}, {vitals: data.primary_key})
+                  .then(function (data) {
+                    sails.log.info('key added ' + data[0].id + " created");
+                  })
+                  .catch(function (error) {
+                    sails.log.error(error);
+                  })
               })
               .catch(function (error) {
                 sails.log.error(error);
@@ -334,6 +374,7 @@ module.exports.bootstrap = function(cb) {
       }
     ])
   })
+
   cb();
 };
 
