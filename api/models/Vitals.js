@@ -9,6 +9,7 @@ module.exports = {
 
   attributes: {
 
+    identity: {type: 'string'},
     name: {type: 'string'},
     age : { type: 'string' },
     height : { type: 'string' },
@@ -24,7 +25,37 @@ module.exports = {
     player_id: {
       type: 'string'
     }
+  },
+
+  load: function (obj) {
+
+    let promise = new Promise(function (resolve, reject) {
+
+      sails.log.info('Loading Vitals');
+
+      if (obj) {
+        resolve(DataService.load(Vitals,
+          {
+            identity: 'vitals',
+            age: obj['Age'],
+            height: obj['Height'],
+            weight: obj['Weight'],
+            year_born: obj['Born'],
+          }, obj)
+        )
+      } else {
+        reject(new Error('obj is null in load of Vitals')).then(function (error) {
+          // not called
+        }, function (error) {
+          sails.log.error(error);
+        });
+      }
+
+    });
+
+    return promise;
 
   }
+
 };
 

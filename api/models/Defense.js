@@ -8,7 +8,7 @@
 module.exports = {
 
   attributes: {
-
+    identity: {type: 'string'},
     arm : { type: 'string' },
     range : { type: 'string' },
     fielding : { type: 'string' },
@@ -19,6 +19,37 @@ module.exports = {
       type: 'string'
     },
 
+  },
+
+  load: function (obj) {
+
+    let promise = new Promise(function (resolve, reject) {
+
+      sails.log.info('Loading Defense');
+
+        if (obj) {
+          resolve(DataService.load(Defense,
+            {
+              identity: 'defense',
+              arm: obj['Arm'],
+              range: obj['Rng'],
+              fielding: obj['Fld'],
+              handling: obj['Han'],
+              defense: obj['Def']
+            }, obj)
+          )
+        } else {
+          reject(new Error('obj is null in load of Defense')).then(function (error) {
+            // not called
+          }, function (error) {
+            sails.log.error(error);
+          });
+        }
+    });
+
+    return promise;
+
   }
+
 };
 

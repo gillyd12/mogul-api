@@ -9,6 +9,7 @@ module.exports = {
 
   attributes: {
 
+    identity: {type: 'string'},
     position : { type: 'string' },
     bats : { type: 'string' },
     throws : { type: 'string' },
@@ -18,7 +19,39 @@ module.exports = {
     player_id: {
       type: 'string'
     }
+  },
+
+  load: function (obj) {
+
+    let promise = new Promise(function (resolve, reject) {
+
+      sails.log.info('Loading Profile');
+
+      if (obj) {
+        resolve(DataService.load(Profile,
+          {
+            identity: 'profile',
+            position: obj['P'],
+            bats: obj['B'],
+            throws: obj['T'],
+            draft_year: obj['Draft Year'],
+            debut_date: obj['Debut Date'],
+            debut_age: obj['Debut Age']
+          }, obj)
+        )
+      } else {
+        reject(new Error('obj is null in load of Profile')).then(function (error) {
+          // not called
+        }, function (error) {
+          sails.log.error(error);
+        });
+      }
+
+    });
+
+    return promise;
 
   }
+
 };
 
