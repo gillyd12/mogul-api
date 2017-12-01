@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-    identity: {type: 'string'},
+    identity: {
+      type: 'string',
+      defaultsTo: 'statuses'
+    },
     injury_time: {type: 'string'},
     years_played: {type: 'string'},
     mlb_service: {type: 'string'},
@@ -26,7 +29,6 @@ module.exports = {
       if (obj) {
         resolve(DataService.load(Statuses,
           {
-            identity: 'statuses',
             injury_time: obj['Injured'],
             years_played: obj['Exp.'],
             mlb_service: obj['MLB Service']

@@ -8,8 +8,10 @@
 module.exports = {
 
   attributes: {
-
-    identity: {type: 'string'},
+    identity: {
+      type: 'string',
+      defaultsTo: 'rating'
+    },
     peak_at_draft: {type: 'string'},
     overall: {type: 'string'},
     peak: {type: 'string'},
@@ -31,7 +33,6 @@ module.exports = {
       if (obj) {
         resolve(DataService.load(Rating,
           {
-            identity: 'rating',
             peak_at_draft: obj['Peak @ Draft'],
             overall: obj['Overall'],
             peak: obj['Peak'],

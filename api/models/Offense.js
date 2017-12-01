@@ -8,8 +8,10 @@
 module.exports = {
 
   attributes: {
-
-    identity: {type: 'string'},
+    identity: {
+      type: 'string',
+      defaultsTo: 'offense'
+    },
     contact: {type: 'string'},
     power: {type: 'string'},
     speed: {type: 'string'},
@@ -30,7 +32,6 @@ module.exports = {
       if (obj) {
         resolve(DataService.load(Offense,
           {
-            identity: 'offense',
             contact: obj['Con'],
             power: obj['Pow'],
             speed: obj['Spd'],

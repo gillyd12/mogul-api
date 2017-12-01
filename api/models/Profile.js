@@ -8,8 +8,10 @@
 module.exports = {
 
   attributes: {
-
-    identity: {type: 'string'},
+    identity: {
+      type: 'string',
+      defaultsTo: 'profile'
+    },
     position : { type: 'string' },
     bats : { type: 'string' },
     throws : { type: 'string' },
@@ -30,7 +32,6 @@ module.exports = {
       if (obj) {
         resolve(DataService.load(Profile,
           {
-            identity: 'profile',
             position: obj['P'],
             bats: obj['B'],
             throws: obj['T'],

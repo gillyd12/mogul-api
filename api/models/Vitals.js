@@ -8,8 +8,10 @@
 module.exports = {
 
   attributes: {
-
-    identity: {type: 'string'},
+    identity: {
+      type: 'string',
+      defaultsTo: 'vitals'
+    },
     name: {type: 'string'},
     age : { type: 'string' },
     height : { type: 'string' },
@@ -36,7 +38,6 @@ module.exports = {
       if (obj) {
         resolve(DataService.load(Vitals,
           {
-            identity: 'vitals',
             age: obj['Age'],
             height: obj['Height'],
             weight: obj['Weight'],

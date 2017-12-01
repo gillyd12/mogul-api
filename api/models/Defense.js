@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-    identity: {type: 'string'},
+    identity: {
+      type: 'string',
+      defaultsTo: 'defense'
+    },
     arm : { type: 'string' },
     range : { type: 'string' },
     fielding : { type: 'string' },
@@ -30,7 +33,6 @@ module.exports = {
         if (obj) {
           resolve(DataService.load(Defense,
             {
-              identity: 'defense',
               arm: obj['Arm'],
               range: obj['Rng'],
               fielding: obj['Fld'],

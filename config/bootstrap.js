@@ -19,7 +19,7 @@ module.exports.bootstrap = function (cb) {
   try {
 
     // parse data
-    let workbook = XLSX.readFile('input/test.xls');
+    let workbook = XLSX.readFile('input/test-min.xls');
     let sheet_name_list = workbook.SheetNames;
     let xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
     // var xlData = [];

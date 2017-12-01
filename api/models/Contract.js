@@ -9,7 +9,10 @@ module.exports = {
 
   attributes: {
 
-    identity: {type: 'string'},
+    identity: {
+      type: 'string',
+      defaultsTo: 'contract'
+    },
     salary: {type: 'string'},
     years: {type: 'string'},
     arbitration: {type: 'string'},
@@ -35,7 +38,6 @@ module.exports = {
 
         resolve(DataService.load(Contract,
           {
-            identity: 'contract',
             salary: obj['Salary'],
             years: obj['Years'],
             arbitration: obj['Arbitration'],

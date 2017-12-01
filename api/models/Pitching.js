@@ -8,8 +8,10 @@
 module.exports = {
 
   attributes: {
-
-    identity: {type: 'string'},
+    identity: {
+      type: 'string',
+      defaultsTo: 'pitching'
+    },
     endurance: {type: 'string'},
     control: {type: 'string'},
     power: {type: 'string'},
@@ -35,7 +37,6 @@ module.exports = {
       if (obj) {
         resolve(DataService.load(Pitching,
           {
-            identity: 'pitching',
             endurance: obj['End'],
             control: obj['Con2'],
             power: obj['Pow2'],
