@@ -1,8 +1,9 @@
-/**
- * Pitching.js
- *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
+/* global
+
+sails
+DataService
+Pitching
+
  */
 
 module.exports = {
@@ -25,14 +26,12 @@ module.exports = {
 
     player_id: {
       type: 'string'
-    },
+    }
   },
 
   load: function (obj) {
-
-    let promise = new Promise(function (resolve, reject) {
-
-      sails.log.info('Loading Pitching');
+    return new Promise(function (resolve, reject) {
+      sails.log.info('Loading Pitching')
 
       if (obj) {
         resolve(DataService.load(Pitching,
@@ -50,16 +49,12 @@ module.exports = {
           }, obj))
       } else {
         reject(new Error('obj is null in load of Pitching')).then(function (error) {
-          // not called
+          sails.log.error(error)
         }, function (error) {
-          sails.log.error(error);
-        });
+          sails.log.error(error)
+        })
       }
-    });
-
-    return promise;
-
+    })
   }
 
-};
-
+}

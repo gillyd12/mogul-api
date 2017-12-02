@@ -1,8 +1,9 @@
-/**
- * Player.js
- *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
+/* global
+
+sails
+DataService
+Player
+
  */
 
 module.exports = {
@@ -19,11 +20,11 @@ module.exports = {
     },
 
     vitals: {
-      model: 'vitals',
+      model: 'vitals'
     },
 
     profile: {
-      model: 'profile',
+      model: 'profile'
     },
 
     contract: {
@@ -31,86 +32,67 @@ module.exports = {
     },
 
     rating: {
-      collection: 'rating',
+      collection: 'rating'
     },
 
     statuses: {
-      collection: 'statuses',
+      collection: 'statuses'
     },
 
     offense: {
-      collection: 'offense',
+      collection: 'offense'
     },
 
     defense: {
-      collection: 'defense',
+      collection: 'defense'
     },
 
     pitching: {
-      collection: 'pitching',
+      collection: 'pitching'
     }
   },
 
   load: function (obj) {
+    return new Promise(function (resolve, reject) {
+      if (obj) {
+        sails.log.info('Loading Player')
 
-    let promise = new Promise(function (resolve, reject) {
-
-      try {
-
-        if (obj) {
-
-          sails.log.info('Loading Player');
-
-          resolve(DataService.load(Player,
-            {
-              name: obj['Player Name'],
-              player_id: obj['Player Name'] + obj['Born'] + obj['Weight']
-            }, obj))
-
-        } else {
-          reject(new Error('obj is null in load of Player')).then(function (error) {
-            // not called
-          }, function (error) {
-            sails.log.error(error);
-          });
-        }
-      } catch (error) {
-        sails.log.error(error);
+        resolve(DataService.load(Player,
+          {
+            name: obj['Player Name'],
+            player_id: obj['Player Name'] + obj['Born'] + obj['Weight']
+          }, obj))
+      } else {
+        reject(new Error('obj is null in load of Player')).then(function (error) {
+          sails.log.error(error)
+        }, function (error) {
+          sails.log.error(error)
+        })
       }
-    });
-
-    return promise;
-
+    })
   },
 
   addCollectionItem: function (model, obj) {
+    return new Promise(function (resolve, reject) {
+      let playerId = obj['Player Name'] + obj['Born'] + obj['Weight']
 
-    let promise = new Promise(function (resolve, reject) {
-
-      let player_id = obj['Player Name'] + obj['Born'] + obj['Weight'];
-
-      resolve(Player.find({player_id: player_id}).populate(model.identity)
+      resolve(Player.find({player_id: playerId}).populate(model.identity)
         .then(function (player) {
-          if (player && player != undefined) {
+          if (player && player !== undefined) {
             Object.entries(player[0]).forEach(([key, value]) => {
               if (key === model.identity) {
-                value.add([model.id]);
+                value.add([model.id])
                 player[0].save(function (error) {
-                  if (error && error != undefined) {
-                    reject(error);
+                  if (error && error !== undefined) {
+                    reject(error)
                   }
-                });
-                sails.log.info(model.identity + " collection added with " + model.id + ' added to player');
+                })
+                sails.log.info(model.identity + ' collection added with ' + model.id + ' added to player')
               }
-            });
+            })
           }
+        }))
+    })
+  }
 
-        }));
-
-    });
-
-    return promise;
-  },
-
-};
-
+}

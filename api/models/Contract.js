@@ -1,8 +1,9 @@
-/**
- * Contract.js
- *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
+/* global
+
+sails
+DataService
+Contract
+
  */
 
 module.exports = {
@@ -25,16 +26,13 @@ module.exports = {
 
     player_id: {
       type: 'string'
-    },
+    }
   },
 
   load: function (obj) {
-
-    let promise = new Promise(function (resolve, reject) {
-
+    return new Promise(function (resolve, reject) {
       if (obj) {
-
-        sails.log.info('Loading Contract');
+        sails.log.info('Loading Contract')
 
         resolve(DataService.load(Contract,
           {
@@ -51,16 +49,12 @@ module.exports = {
         )
       } else {
         reject(new Error('obj is null in load of Contract')).then(function (error) {
-          // not called
+          sails.log.error(error)
         }, function (error) {
-          sails.log.error(error);
-        });
+          sails.log.error(error)
+        })
       }
     })
-
-    return promise;
-
   }
 
-};
-
+}

@@ -1,7 +1,6 @@
 var XLSX = require('xlsx')
 
-module.exports = function myHook(sails) {
-
+module.exports = function myHook (sails) {
   {
     defaults: {
       __configKey__: {
@@ -13,12 +12,8 @@ module.exports = function myHook(sails) {
   return {
 
     initialize: function (cb) {
-
-      return cb();
-
+      return cb()
     }
 
   }
-
-};
-
+}

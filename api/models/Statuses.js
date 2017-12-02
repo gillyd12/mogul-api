@@ -1,8 +1,9 @@
-/**
- * Status.js
- *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
+/* global
+
+sails
+DataService
+Statuses
+
  */
 
 module.exports = {
@@ -17,14 +18,12 @@ module.exports = {
     mlb_service: {type: 'string'},
     player_id: {
       type: 'string'
-    },
+    }
   },
 
   load: function (obj) {
-
-    let promise = new Promise(function (resolve, reject) {
-
-      sails.log.info('Loading Statuses');
+    return new Promise(function (resolve, reject) {
+      sails.log.info('Loading Statuses')
 
       if (obj) {
         resolve(DataService.load(Statuses,
@@ -36,17 +35,12 @@ module.exports = {
         )
       } else {
         reject(new Error('obj is null in load of Statuses')).then(function (error) {
-          // not called
+          sails.log.error(error)
         }, function (error) {
-          sails.log.error(error);
-        });
+          sails.log.error(error)
+        })
       }
-
-    });
-
-    return promise;
-
+    })
   }
 
-};
-
+}

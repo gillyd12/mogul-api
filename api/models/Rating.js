@@ -1,8 +1,9 @@
-/**
- * Rating.js
- *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
+/* global
+
+sails
+DataService
+Rating
+
  */
 
 module.exports = {
@@ -25,10 +26,8 @@ module.exports = {
   },
 
   load: function (obj) {
-
-    let promise = new Promise(function (resolve, reject) {
-
-      sails.log.info('Loading Rating');
+    return new Promise(function (resolve, reject) {
+      sails.log.info('Loading Rating')
 
       if (obj) {
         resolve(DataService.load(Rating,
@@ -44,17 +43,12 @@ module.exports = {
         )
       } else {
         reject(new Error('obj is null in load of Rating')).then(function (error) {
-          // not called
+          sails.log.error(error)
         }, function (error) {
-          sails.log.error(error);
-        });
+          sails.log.error(error)
+        })
       }
-
-    });
-
-    return promise;
-
+    })
   }
 
-};
-
+}
