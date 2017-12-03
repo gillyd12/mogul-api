@@ -21,6 +21,7 @@ Pitching
 Statuses
 Vitals
 Rating
+Team
 async
 _
 
@@ -179,5 +180,9 @@ module.exports.bootstrap = function (cb) {
     ])
   }
 
+  Promise.resolve(Team.init())
+    .catch(function (error) {
+      Promise.reject(sails.log.error(error))
+    })
   cb()
 }
