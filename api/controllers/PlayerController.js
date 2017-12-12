@@ -40,26 +40,28 @@ module.exports = {
    */
   contractByTeam: function (req, res) {
     let payload = []
-    Player.find()
-      .populate('profile')
-      .populate('rating', {
-        limit: 1,
-        sort: 'createdAt DESC'
+    Player.find({
+        where: {
+          currentTeam: req.query.team
+        },
+        select: ['name']
       })
+      .populate('profile', {
+        select: ['position']
+      })
+      // .populate('rating', {
+      //   limit: 1,
+      //   sort: 'createdAt DESC',
+      //   select: ['overall', 'peak']
+      // })
       .populate('statuses', {
         limit: 1,
-        sort: 'createdAt DESC'
-      })
-      .populate('contract', {
-        where: {
-          organizational_roster: req.query.team
-        },
-        limit: 1,
-        sort: 'createdAt DESC'
+        sort: 'createdAt DESC',
+        select: ['injury_time']
       })
       .then(function (players, err) {
         for (let player of players) {
-          if (player.contract.length > 0) {
+          if (player.statuses[0].injury_time > 0) {
             payload.push(player)
           }
         }

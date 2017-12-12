@@ -19,6 +19,10 @@ module.exports = {
       type: 'string'
     },
 
+    currentTeam: {
+      type: 'string'
+    },
+
     vitals: {
       model: 'vitals'
     },
@@ -79,6 +83,9 @@ module.exports = {
       resolve(Player.find({player_id: playerId}).populate(model.identity)
         .then(function (player) {
           if (player && player !== undefined) {
+            if (model.identity === 'contract') {
+              player[0].currentTeam = model.organizational_roster
+            }
             Object.entries(player[0]).forEach(([key, value]) => {
               if (key === model.identity) {
                 value.add([model.id])
