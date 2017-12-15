@@ -4,13 +4,8 @@
   "version": "0.0.0",
   "description": "a Sails application",
   "keywords": [],
-  "dependencies": {
-    "include-all": "^1.0.0",
-    "rc": "1.0.1",
-    "sails": "~0.12.13",
-    "sails-disk": "~0.10.9"
-  },
   "scripts": {
+    "prestart": "node getEnv",
     "debug": "node debug app.js",
     "start": "node app.js",
     "test": "node ./node_modules/mocha/bin/mocha test/bootstrap.test.js test/integration/**/*.test.js"
@@ -30,8 +25,16 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "mocha": "^3.5.3",
+    "supertest": "^3.0.0"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^1.5.1",
+    "dotenv": "^4.0.0",
+    "include-all": "^1.0.0",
+    "rc": "1.0.1",
+    "sails": "~0.12.13",
+    "sails-disk": "~0.10.9",
     "sails-mongo": "^0.12.2",
-    "supertest": "^3.0.0",
     "xlsx": "^0.11.10"
   }
 }

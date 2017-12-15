@@ -34,9 +34,9 @@ module.exports.bootstrap = function (cb) {
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
 
   // parse data
-  // let workbook = XLSX.readFile('input/test.xls')
-  // let xlData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]])
-  var xlData = []
+  let workbook = XLSX.readFile('input/test.xls')
+  let xlData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]])
+  // var xlData = []
 
   // ES6 For of
   // noinspection JSDeclarationsAtScopeStart

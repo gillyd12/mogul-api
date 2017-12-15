@@ -14,11 +14,41 @@ module.exports = {
       defaultsTo: 'statuses'
     },
     injury_time: {type: 'string'},
+    total_injury_time: {
+      type: 'string',
+      defaultsTo: '0'
+    },
     years_played: {type: 'string'},
     mlb_service: {type: 'string'},
     player_id: {
       type: 'string'
     }
+  },
+
+  enrich: function() {
+
+    let payload = []
+    Statuses.find({
+      // where: {
+      //
+      // },
+      sort: 'createdAt DESC'
+    })
+      .then(function (statuses, err) {
+
+        for (let player of players) {
+          if (player.statuses[0].injury_time > 0) {
+            payload.push(player)
+          }
+        }
+        return res.json(payload)
+      })
+      .catch(function (err) {
+        sails.log.error(err)
+        return res.json(payload)
+      })
+
+
   },
 
   load: function (obj) {

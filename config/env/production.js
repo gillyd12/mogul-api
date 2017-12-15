@@ -32,15 +32,13 @@ module.exports = {
    ***************************************************************************/
 
   log: {
-    level: "silent"
+    level: 'info'
   },
 
-  // models: {
-  //   connection: 'localDiskDb',
-  //   migrate: 'drop'
-  // },
+  models: {
+    connection: 'mongolabs',
+    migrate: 'safe'
+  },
 
   liftTimeout: 30000
-
-
-};
+}

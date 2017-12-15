@@ -24,6 +24,14 @@
 // > Note: This is not required in order to lift, but it is a convenient default.
 process.chdir(__dirname);
 
+// loading .dotenv
+try {
+  require('dotenv').config()
+} catch (e) {
+  console.error('having trouble loading dotenv');
+  return;
+}
+
 // Attempt to import `sails`.
 var sails;
 try {
@@ -54,7 +62,6 @@ try {
     rc = function () { return {}; };
   }
 }
-
 
 // Start server
 sails.lift(rc('sails'));
