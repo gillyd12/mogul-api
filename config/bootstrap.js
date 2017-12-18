@@ -23,20 +23,33 @@ Vitals
 Rating
 Team
 async
-_
+Simulation
 
  */
 
 let XLSX = require('xlsx')
+let _ = require('lodash')
 
 module.exports.bootstrap = function (cb) {
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
 
+  // todo -- bring these into configurations
+  let fileName = '2077-9'
+  let inputFolder = 'input/data'
+  let runDataLoad = true
+
+  // set unique data for simulation
+  let d = _.split(fileName, '-', 2)
+  sails.config.simulation.year = d[0]
+  sails.config.simulation.number = d[1]
+
   // parse data
-  let workbook = XLSX.readFile('input/test.xls')
-  let xlData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]])
-  // var xlData = []
+  var xlData = []
+  if (runDataLoad) {
+    let workbook = XLSX.readFile(inputFolder + '/' + fileName + '.xls')
+    xlData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]])
+  }
 
   // ES6 For of
   // noinspection JSDeclarationsAtScopeStart
@@ -184,5 +197,11 @@ module.exports.bootstrap = function (cb) {
     .catch(function (error) {
       Promise.reject(sails.log.error(error))
     })
+
+  Promise.resolve(Simulation.init())
+    .catch(function (error) {
+      Promise.reject(sails.log.error(error))
+    })
+
   cb()
 }

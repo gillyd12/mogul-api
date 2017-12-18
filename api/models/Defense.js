@@ -18,6 +18,8 @@ module.exports = {
     fielding: { type: 'string' },
     handling: { type: 'string' },
     defense: { type: 'string' },
+    simYear: {type: 'string'},
+    simNumber: {type: 'string'},
 
     player_id: {
       type: 'string'
@@ -36,7 +38,9 @@ module.exports = {
             range: obj['Rng'],
             fielding: obj['Fld'],
             handling: obj['Han'],
-            defense: obj['Def']
+            defense: obj['Def'],
+            simYear: sails.config.simulation.year,
+            simNumber: sails.config.simulation.number
           }, obj)
         )
       } else {

@@ -20,6 +20,9 @@ module.exports = {
     health: {type: 'string'},
     happiness: {type: 'string'},
     scouting: {type: 'string'},
+    simYear: {type: 'string'},
+    simNumber: {type: 'string'},
+
     player_id: {
       type: 'string'
     }
@@ -38,7 +41,9 @@ module.exports = {
             upside: obj['Upside'],
             health: obj['Health'],
             happiness: obj['Happiness'],
-            scouting: obj['Scouting']
+            scouting: obj['Scouting'],
+            simYear: sails.config.simulation.year,
+            simNumber: sails.config.simulation.number
           }, obj)
         )
       } else {

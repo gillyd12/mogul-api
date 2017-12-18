@@ -23,6 +23,8 @@ module.exports = {
     team_option: {type: 'string'},
     no_trade: {type: 'string'},
     seeking: {type: 'string'},
+    simYear: {type: 'string'},
+    simNumber: {type: 'string'},
 
     player_id: {
       type: 'string'
@@ -44,8 +46,10 @@ module.exports = {
             player_option: obj['Player Option'],
             team_option: obj['Team Option'],
             no_trade: obj['No Trade'],
-            seeking: obj['Seeking']
-          }, obj)
+            seeking: obj['Seeking'],
+            simYear: sails.config.simulation.year,
+            simNumber: sails.config.simulation.number
+      }, obj)
         )
       } else {
         reject(new Error('obj is null in load of Contract')).then(function (error) {

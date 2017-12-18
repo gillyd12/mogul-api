@@ -20,36 +20,39 @@ module.exports = {
     },
     years_played: {type: 'string'},
     mlb_service: {type: 'string'},
+    simYear: {type: 'string'},
+    simNumber: {type: 'string'},
+
     player_id: {
       type: 'string'
     }
   },
 
-  enrich: function() {
-
-    let payload = []
-    Statuses.find({
-      // where: {
-      //
-      // },
-      sort: 'createdAt DESC'
-    })
-      .then(function (statuses, err) {
-
-        for (let player of players) {
-          if (player.statuses[0].injury_time > 0) {
-            payload.push(player)
-          }
-        }
-        return res.json(payload)
-      })
-      .catch(function (err) {
-        sails.log.error(err)
-        return res.json(payload)
-      })
-
-
-  },
+  // enrich: function() {
+  //
+  //   let payload = []
+  //   Statuses.find({
+  //     // where: {
+  //     //
+  //     // },
+  //     sort: 'createdAt DESC'
+  //   })
+  //     .then(function (statuses, err) {
+  //
+  //       for (let player of players) {
+  //         if (player.statuses[0].injury_time > 0) {
+  //           payload.push(player)
+  //         }
+  //       }
+  //       return res.json(payload)
+  //     })
+  //     .catch(function (err) {
+  //       sails.log.error(err)
+  //       return res.json(payload)
+  //     })
+  //
+  //
+  // },
 
   load: function (obj) {
     return new Promise(function (resolve, reject) {
@@ -60,7 +63,9 @@ module.exports = {
           {
             injury_time: obj['Injured'],
             years_played: obj['Exp.'],
-            mlb_service: obj['MLB Service']
+            mlb_service: obj['MLB Service'],
+            simYear: sails.config.simulation.year,
+            simNumber: sails.config.simulation.number
           }, obj)
         )
       } else {

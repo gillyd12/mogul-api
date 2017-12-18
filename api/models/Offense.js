@@ -18,6 +18,8 @@ module.exports = {
     speed: {type: 'string'},
     eye: {type: 'string'},
     bunt: {type: 'string'},
+    simYear: {type: 'string'},
+    simNumber: {type: 'string'},
 
     player_id: {
       type: 'string'
@@ -35,7 +37,9 @@ module.exports = {
             power: obj['Pow'],
             speed: obj['Spd'],
             eye: obj['Eye'],
-            bunt: obj['Bunt']
+            bunt: obj['Bunt'],
+            simYear: sails.config.simulation.year,
+            simNumber: sails.config.simulation.number
           }, obj)
         )
       } else {

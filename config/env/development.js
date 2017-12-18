@@ -19,9 +19,8 @@ module.exports = {
 
   models: {
     connection: 'mongolabs',
-    migrate: 'drop'
+    migrate: 'safe'
   },
 
   liftTimeout: 30000
-
-};
+}

@@ -23,6 +23,8 @@ module.exports = {
     pitch_3: {type: 'string'},
     pitch_4: {type: 'string'},
     pitch_5: {type: 'string'},
+    simYear: {type: 'string'},
+    simNumber: {type: 'string'},
 
     player_id: {
       type: 'string'
@@ -45,7 +47,9 @@ module.exports = {
             pitch_2: obj['#2 Pitch'],
             pitch_3: obj['#3 Pitch'],
             pitch_4: obj['#4 Pitch'],
-            pitch_5: obj['#5 Pitch']
+            pitch_5: obj['#5 Pitch'],
+            simYear: sails.config.simulation.year,
+            simNumber: sails.config.simulation.number
           }, obj))
       } else {
         reject(new Error('obj is null in load of Pitching')).then(function (error) {
