@@ -163,7 +163,7 @@ module.exports = {
           league: 'AL'
         },
         {
-          short_name: 'WAS',
+          short_name: 'WSN',
           full_name: 'Washington Nationals',
           city: 'Washington',
           maskot: 'Nationals',

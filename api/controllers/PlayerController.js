@@ -19,15 +19,18 @@ module.exports = {
       .populate('profile', {
         select: ['position']
       })
-      // .populate('rating', {
-      //   limit: 1,
-      //   sort: 'createdAt DESC',
-      //   select: ['overall', 'peak']
-      // })
+      .populate('contract', {
+        where: {
+          organizational_roster: req.query.team
+        },
+        limit: 1,
+        sort: 'createdAt DESC',
+        select: ['salary', 'years']
+      })
       .populate('statuses', {
         limit: 1,
         sort: 'createdAt DESC',
-        select: ['injury_time']
+        select: ['injury_time', 'roster']
       })
       .then(function (players, err) {
         for (let player of players) {

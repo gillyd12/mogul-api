@@ -14,12 +14,9 @@ module.exports = {
       defaultsTo: 'statuses'
     },
     injury_time: {type: 'string'},
-    total_injury_time: {
-      type: 'string',
-      defaultsTo: '0'
-    },
     years_played: {type: 'string'},
     mlb_service: {type: 'string'},
+    roster: {type: 'string'},
     simYear: {type: 'string'},
     simNumber: {type: 'string'},
 
@@ -64,6 +61,7 @@ module.exports = {
             injury_time: obj['Injured'],
             years_played: obj['Exp.'],
             mlb_service: obj['MLB Service'],
+            roster: obj['Roster'],
             simYear: sails.config.simulation.year,
             simNumber: sails.config.simulation.number
           }, obj)
