@@ -42,6 +42,7 @@ module.exports = {
             health: obj['Health'],
             happiness: obj['Happiness'],
             scouting: obj['Scouting'],
+            player_id: obj['Player Name'] + obj['Born'] + obj['Weight'],
             simYear: sails.config.simulation.year,
             simNumber: sails.config.simulation.number
           }, obj)

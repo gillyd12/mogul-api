@@ -77,7 +77,7 @@ module.exports = {
 
     payload.outForSeason = outForSeason
     payload.expectedReturn = futureSim
-    payload.days = injuryTime
+    payload.days = Number(injuryTime)
 
     return payload
   }

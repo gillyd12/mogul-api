@@ -48,6 +48,7 @@ module.exports = {
             pitch_3: obj['#3 Pitch'],
             pitch_4: obj['#4 Pitch'],
             pitch_5: obj['#5 Pitch'],
+            player_id: obj['Player Name'] + obj['Born'] + obj['Weight'],
             simYear: sails.config.simulation.year,
             simNumber: sails.config.simulation.number
           }, obj))

@@ -47,6 +47,7 @@ module.exports = {
             team_option: obj['Team Option'],
             no_trade: obj['No Trade'],
             seeking: obj['Seeking'],
+            player_id: obj['Player Name'] + obj['Born'] + obj['Weight'],
             simYear: sails.config.simulation.year,
             simNumber: sails.config.simulation.number
       }, obj)

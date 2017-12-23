@@ -40,7 +40,8 @@ module.exports = {
             age: obj['Age'],
             height: obj['Height'],
             weight: obj['Weight'],
-            year_born: obj['Born']
+            year_born: obj['Born'],
+            player_id: obj['Player Name'] + obj['Born'] + obj['Weight']
           }, obj)
         )
       } else {

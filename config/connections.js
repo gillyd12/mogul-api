@@ -41,6 +41,15 @@ module.exports.connections = {
     database: process.env.mogul_mongo_database // or omit if not relevant
   },
 
+  mongolabsBeta: {
+    adapter: 'sails-mongo',
+    host: process.env.mogul_mongo_host_beta, // defaults to `localhost` if omitted
+    port: process.env.mogul_mongo_port_beta, // defaults to 27017 if omitted
+    user: process.env.mogul_mongo_username_beta, // or omit if not relevant
+    password: process.env.mogul_mongo_password_beta, // or omit if not relevant
+    database: process.env.mogul_mongo_database_beta // or omit if not relevant
+  }
+
   /***************************************************************************
   *                                                                          *
   * MySQL is the world's most popular relational database.                   *

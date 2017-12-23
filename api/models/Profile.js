@@ -36,7 +36,8 @@ module.exports = {
             throws: obj['T'],
             draft_year: obj['Draft Year'],
             debut_date: obj['Debut Date'],
-            debut_age: obj['Debut Age']
+            debut_age: obj['Debut Age'],
+            player_id: obj['Player Name'] + obj['Born'] + obj['Weight']
           }, obj)
         )
       } else {

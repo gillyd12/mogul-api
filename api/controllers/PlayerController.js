@@ -3,30 +3,32 @@
 sails
 Player
 DataService
-
  */
+
+let _ = require('lodash')
 
 module.exports = {
 
   contractByTeam: function (req, res) {
     let payload = []
+
     Player.find({
-        where: {
-          currentTeam: req.query.team
-        },
-        select: ['name']
-      })
+      where: {
+        currentTeam: req.query.team
+      },
+      select: ['name']
+    })
       .populate('profile', {
         select: ['position']
       })
-      .populate('contract', {
-        where: {
-          organizational_roster: req.query.team
-        },
-        limit: 1,
-        sort: 'createdAt DESC',
-        select: ['salary', 'years']
-      })
+      // .populate('contract', {
+      //   where: {
+      //     organizational_roster: req.query.team
+      //   },
+      //   limit: 1,
+      //   sort: 'createdAt DESC',
+      //   select: ['salary', 'years']
+      // })
       .populate('statuses', {
         limit: 1,
         sort: 'createdAt DESC',
@@ -39,7 +41,9 @@ module.exports = {
             payload.push(player)
           }
         }
-        return res.json(payload)
+        let p = _.orderBy(payload, ['expectedReturn.days'], ['desc'])
+        return res.json(p)
+        // return res.json(payload)
       })
       .catch(function (err) {
         sails.log.error(err)

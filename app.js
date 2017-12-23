@@ -25,6 +25,7 @@
 process.chdir(__dirname);
 
 // loading .dotenv
+
 try {
   require('dotenv').config()
 } catch (e) {

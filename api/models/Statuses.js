@@ -13,7 +13,7 @@ module.exports = {
       type: 'string',
       defaultsTo: 'statuses'
     },
-    injury_time: {type: 'string'},
+    injury_time: {type: 'integer'},
     years_played: {type: 'string'},
     mlb_service: {type: 'string'},
     roster: {type: 'string'},
@@ -58,10 +58,11 @@ module.exports = {
       if (obj) {
         resolve(DataService.load(Statuses,
           {
-            injury_time: obj['Injured'],
+            injury_time: Number(obj['Injured']),
             years_played: obj['Exp.'],
             mlb_service: obj['MLB Service'],
             roster: obj['Roster'],
+            player_id: obj['Player Name'] + obj['Born'] + obj['Weight'],
             simYear: sails.config.simulation.year,
             simNumber: sails.config.simulation.number
           }, obj)

@@ -38,6 +38,7 @@ module.exports = {
             speed: obj['Spd'],
             eye: obj['Eye'],
             bunt: obj['Bunt'],
+            player_id: obj['Player Name'] + obj['Born'] + obj['Weight'],
             simYear: sails.config.simulation.year,
             simNumber: sails.config.simulation.number
           }, obj)
