@@ -44,7 +44,7 @@ module.exports = {
                 payload.push(player)
               }
             }
-
+            // return res.json(_.groupBy(payload, 'currentTeam'))
             return res.json(payload)
           })
           .catch(function (err) {
