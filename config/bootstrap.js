@@ -12,18 +12,10 @@
 /* global
 
 sails
-Player
-Contract
-Offense
-Defense
-Profile
-Pitching
-Statuses
-Vitals
-Rating
-Team
 async
+Player
 Simulation
+Team
 
  */
 
@@ -35,7 +27,7 @@ module.exports.bootstrap = function (cb) {
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
 
   // todo -- bring these into configurations
-  let fileName = '2077-13-partial'
+  let fileName = '2077-13'
   let inputFolder = 'input/data'
   let runDataLoad = false
 
@@ -69,122 +61,122 @@ module.exports.bootstrap = function (cb) {
             })
           callback()
         },
-        function (callback) {
-          async.parallel([
-            function (callback) {
-              Promise.resolve(Contract.load(obj).then(function (contract) {
-                Player.addCollectionItem(contract, obj)
-                  .then(function (data) {
-                  }).catch(function (error) {
-                  Promise.reject(sails.log.error(error))
-                })
-              }).catch(function (error) {
-                Promise.reject(sails.log.error(error))
-              }))
-
-              callback()
-            },
-            function (callback) {
-              Promise.resolve(Defense.load(obj).then(function (defense) {
-                Player.addCollectionItem(defense, obj)
-                  .then(function (data) {
-                  }).catch(function (error) {
-                  Promise.reject(sails.log.error(error))
-                })
-              }).catch(function (error) {
-                Promise.reject(sails.log.error(error))
-              }))
-
-              callback()
-            },
-            function (callback) {
-              Promise.resolve(Offense.load(obj).then(function (offense) {
-                Player.addCollectionItem(offense, obj)
-                  .then(function (data) {
-                  }).catch(function (error) {
-                  Promise.reject(sails.log.error(error))
-                })
-              }).catch(function (error) {
-                Promise.reject(sails.log.error(error))
-              }))
-
-              callback()
-            },
-            function (callback) {
-              Promise.resolve(Profile.load(obj).then(function (profile) {
-                let playerId = obj['Player Name'] + obj['Born'] + obj['Weight']
-                Player.update({player_id: playerId}, {profile: profile.id})
-                  .then(function (data) {
-                    sails.log.info(profile.identity + ' collection added with ' + profile.id + ' added to player')
-                  }).catch(function (error) {
-                  Promise.reject(sails.log.error(error))
-                })
-              }).catch(function (error) {
-                Promise.reject(sails.log.error(error))
-              }))
-
-              callback()
-            },
-            function (callback) {
-              Promise.resolve(Rating.load(obj).then(function (rating) {
-                Player.addCollectionItem(rating, obj)
-                  .then(function (data) {
-                  }).catch(function (error) {
-                  Promise.reject(sails.log.error(error))
-                })
-              }).catch(function (error) {
-                Promise.reject(sails.log.error(error))
-              }))
-
-              callback()
-            },
-            function (callback) {
-              Promise.resolve(Pitching.load(obj).then(function (pitching) {
-                Player.addCollectionItem(pitching, obj)
-                  .then(function (data) {
-                  }).catch(function (error) {
-                  Promise.reject(sails.log.error(error))
-                })
-              }).catch(function (error) {
-                Promise.reject(sails.log.error(error))
-              }))
-
-              callback()
-            },
-            function (callback) {
-              Promise.resolve(Statuses.load(obj).then(function (status) {
-                Player.addCollectionItem(status, obj)
-                  .then(function (data) {
-                  }).catch(function (error) {
-                  Promise.reject(sails.log.error(error))
-                })
-              }).catch(function (error) {
-                Promise.reject(sails.log.error(error))
-              }))
-
-              callback()
-            },
-            function (callback) {
-              Promise.resolve(Vitals.load(obj).then(function (vital) {
-                let playerId = obj['Player Name'] + obj['Born'] + obj['Weight']
-                Player.update({player_id: playerId}, {vitals: vital.id})
-                  .then(function (data) {
-                    sails.log.info(vital.identity + ' collection added with ' + vital.id + ' added to player')
-                  }).catch(function (error) {
-                  Promise.reject(sails.log.error(error))
-                })
-              }).catch(function (error) {
-                Promise.reject(sails.log.error(error))
-              }))
-
-              callback()
-            },
-            function (callback) {
-              sails.log.info('Parsing is completed.')
-              // return cb();
-            }
-          ])
-        },
+        // function (callback) {
+        //   async.parallel([
+        //     function (callback) {
+        //       Promise.resolve(Contract.load(obj).then(function (contract) {
+        //         Player.addCollectionItem(contract, obj)
+        //           .then(function (data) {
+        //           }).catch(function (error) {
+        //           Promise.reject(sails.log.error(error))
+        //         })
+        //       }).catch(function (error) {
+        //         Promise.reject(sails.log.error(error))
+        //       }))
+        //
+        //       callback()
+        //     },
+        //     function (callback) {
+        //       Promise.resolve(Defense.load(obj).then(function (defense) {
+        //         Player.addCollectionItem(defense, obj)
+        //           .then(function (data) {
+        //           }).catch(function (error) {
+        //           Promise.reject(sails.log.error(error))
+        //         })
+        //       }).catch(function (error) {
+        //         Promise.reject(sails.log.error(error))
+        //       }))
+        //
+        //       callback()
+        //     },
+        //     function (callback) {
+        //       Promise.resolve(Offense.load(obj).then(function (offense) {
+        //         Player.addCollectionItem(offense, obj)
+        //           .then(function (data) {
+        //           }).catch(function (error) {
+        //           Promise.reject(sails.log.error(error))
+        //         })
+        //       }).catch(function (error) {
+        //         Promise.reject(sails.log.error(error))
+        //       }))
+        //
+        //       callback()
+        //     },
+        //     function (callback) {
+        //       Promise.resolve(Profile.load(obj).then(function (profile) {
+        //         let playerId = obj['Player Name'] + obj['Born'] + obj['Weight']
+        //         Player.update({player_id: playerId}, {profile: profile.id})
+        //           .then(function (data) {
+        //             sails.log.info(profile.identity + ' collection added with ' + profile.id + ' added to player')
+        //           }).catch(function (error) {
+        //           Promise.reject(sails.log.error(error))
+        //         })
+        //       }).catch(function (error) {
+        //         Promise.reject(sails.log.error(error))
+        //       }))
+        //
+        //       callback()
+        //     },
+        //     function (callback) {
+        //       Promise.resolve(Rating.load(obj).then(function (rating) {
+        //         Player.addCollectionItem(rating, obj)
+        //           .then(function (data) {
+        //           }).catch(function (error) {
+        //           Promise.reject(sails.log.error(error))
+        //         })
+        //       }).catch(function (error) {
+        //         Promise.reject(sails.log.error(error))
+        //       }))
+        //
+        //       callback()
+        //     },
+        //     function (callback) {
+        //       Promise.resolve(Pitching.load(obj).then(function (pitching) {
+        //         Player.addCollectionItem(pitching, obj)
+        //           .then(function (data) {
+        //           }).catch(function (error) {
+        //           Promise.reject(sails.log.error(error))
+        //         })
+        //       }).catch(function (error) {
+        //         Promise.reject(sails.log.error(error))
+        //       }))
+        //
+        //       callback()
+        //     },
+        //     function (callback) {
+        //       Promise.resolve(Statuses.load(obj).then(function (status) {
+        //         Player.addCollectionItem(status, obj)
+        //           .then(function (data) {
+        //           }).catch(function (error) {
+        //           Promise.reject(sails.log.error(error))
+        //         })
+        //       }).catch(function (error) {
+        //         Promise.reject(sails.log.error(error))
+        //       }))
+        //
+        //       callback()
+        //     },
+        //     function (callback) {
+        //       Promise.resolve(Vitals.load(obj).then(function (vital) {
+        //         let playerId = obj['Player Name'] + obj['Born'] + obj['Weight']
+        //         Player.update({player_id: playerId}, {vitals: vital.id})
+        //           .then(function (data) {
+        //             sails.log.info(vital.identity + ' collection added with ' + vital.id + ' added to player')
+        //           }).catch(function (error) {
+        //           Promise.reject(sails.log.error(error))
+        //         })
+        //       }).catch(function (error) {
+        //         Promise.reject(sails.log.error(error))
+        //       }))
+        //
+        //       callback()
+        //     },
+        //     function (callback) {
+        //       sails.log.info('Parsing is completed.')
+        //       // return cb();
+        //     }
+        //   ])
+        // },
         function (callback) {
           sails.log.info('Parsing is completed.')
           // return cb();

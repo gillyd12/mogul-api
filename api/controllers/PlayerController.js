@@ -10,41 +10,49 @@ let _ = require('lodash')
 module.exports = {
 
   find: function (req, res) {
-    let payload = []
+    // let payload = []
+    var ageQuery = {'>': '1'}
+    if (req.query.age) {
+      // req.query.age =
+      ageQuery = req.query.age.split(',')
+    }
+    // let ages = req.query.age
     Player.find({
-      or: [
-        {age: 10000},
-        {'vitals.age': ['21']}
-      ]
+      age: ageQuery,
+      limit: 20
+      // or: [
+      //   {age: 10000},
+      //   {'vitals.age': ['21']}
+      // ]
     })
-      .populate('vitals', {
-        select: ['age']
-      })
-      .populate('profile', {
-        select: ['throws', 'bats', 'position', 'draft_year']
-      })
-      .populate('offense', {
-        limit: 1,
-        sort: 'createdAt DESC',
-        select: ['contact', 'power', 'eye', 'speed']
-      })
-      .populate('defense', {
-        limit: 1,
-        sort: 'createdAt DESC',
-        select: ['arm', 'range', 'fielding', 'defense']
-      })
-      .populate('rating', {
-        limit: 1,
-        sort: 'createdAt DESC',
-        select: ['overall', 'peak', 'health', 'scouting']
-      })
+      // .populate('vitals', {
+      //   select: ['age']
+      // })
+      // .populate('profile', {
+      //   select: ['throws', 'bats', 'position', 'draft_year']
+      // })
+      // .populate('offense', {
+      //   limit: 1,
+      //   sort: 'createdAt DESC',
+      //   select: ['contact', 'power', 'eye', 'speed']
+      // })
+      // .populate('defense', {
+      //   limit: 1,
+      //   sort: 'createdAt DESC',
+      //   select: ['arm', 'range', 'fielding', 'defense']
+      // })
+      // .populate('rating', {
+      //   limit: 1,
+      //   sort: 'createdAt DESC',
+      //   select: ['overall', 'peak', 'health', 'scouting']
+      // })
       .then(function (players, err) {
-        for (let player of players) {
-          // let filters = req.query.filter
-          // _.find(filters, { 'age': player., 'active': true });
-          payload.push(player)
-        }
-        return res.json(payload)
+        // for (let player of players) {
+        //   // let filters = req.query.filter
+        //   // _.find(filters, { 'age': player., 'active': true });
+        //   payload.push(player)
+        // }
+        return res.json(players)
       })
   },
 
