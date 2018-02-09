@@ -16,6 +16,8 @@ module.exports = {
     var batsQuery = {'!': '---'}
     var posQuery = {'!': '---'}
     var sortQuery = 'overall'
+    var yearQuery = sails.config.simulation.year
+    var simQuery = sails.config.simulation.number
 
     if (req.query.age) {
       // req.query.age =
@@ -39,7 +41,9 @@ module.exports = {
       throws: throwsQuery,
       bats: batsQuery,
       position: posQuery,
-      limit: 9999,
+      simYear: yearQuery,
+      simNumber: simQuery,
+      limit: 30,
       sort: sortQuery + ' desc'
 
       // or: [
