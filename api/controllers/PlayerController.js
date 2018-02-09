@@ -12,14 +12,36 @@ module.exports = {
   find: function (req, res) {
     // let payload = []
     var ageQuery = {'>': '1'}
+    var throwsQuery = {'!': '---'}
+    var batsQuery = {'!': '---'}
+    var posQuery = {'!': '---'}
+    var sortQuery = 'overall'
+
     if (req.query.age) {
       // req.query.age =
       ageQuery = req.query.age.split(',')
     }
-    // let ages = req.query.age
+    if (req.query.throws) {
+      throwsQuery = req.query.throws
+    }
+    if (req.query.bats) {
+      batsQuery = req.query.bats
+    }
+    if (req.query.position) {
+      posQuery = req.query.position.split(',')
+    }
+    if (req.query.sort) {
+      sortQuery = req.query.sort
+    }
+
     Player.find({
       age: ageQuery,
-      limit: 20
+      throws: throwsQuery,
+      bats: batsQuery,
+      position: posQuery,
+      limit: 9999,
+      sort: sortQuery + ' desc'
+
       // or: [
       //   {age: 10000},
       //   {'vitals.age': ['21']}
