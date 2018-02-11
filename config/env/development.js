@@ -18,7 +18,7 @@ module.exports = {
    ***************************************************************************/
 
   models: {
-    connection: 'mongolabs',
+    connection: 'mongolabsBeta',
     migrate: 'safe'
   },
 
