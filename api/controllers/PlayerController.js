@@ -16,8 +16,10 @@ module.exports = {
     var batsQuery = {'!': '---'}
     var posQuery = {'!': '---'}
     var sortQuery = 'overall'
-    var yearQuery = sails.config.simulation.year
-    var simQuery = sails.config.simulation.number
+    var limitQuery = 30
+    var draftYearQuery = '2077'
+    var simYearQuery = sails.config.simulation.year
+    var simNumberQuery = sails.config.simulation.number
 
     if (req.query.age) {
       // req.query.age =
@@ -32,6 +34,18 @@ module.exports = {
     if (req.query.position) {
       posQuery = req.query.position.split(',')
     }
+    if (req.query.simYear) {
+      simYearQuery = req.query.simYear
+    }
+    if (req.query.simNumber) {
+      simNumberQuery = req.query.simNumber
+    }
+    if (req.query.draftYear) {
+      draftYearQuery = req.query.draftYear
+    }
+    if (req.query.limit) {
+      limitQuery = req.query.limit
+    }
     if (req.query.sort) {
       sortQuery = req.query.sort
     }
@@ -41,9 +55,10 @@ module.exports = {
       throws: throwsQuery,
       bats: batsQuery,
       position: posQuery,
-      simYear: yearQuery,
-      simNumber: simQuery,
-      limit: 30,
+      simYear: simYearQuery,
+      simNumber: simNumberQuery,
+      draft_year: draftYearQuery,
+      limit: limitQuery,
       sort: sortQuery + ' desc'
 
       // or: [
