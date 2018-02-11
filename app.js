@@ -26,12 +26,12 @@ process.chdir(__dirname);
 
 // loading .dotenv
 
-try {
-  require('dotenv').config()
-} catch (e) {
-  console.error('having trouble loading dotenv');
-  return;
-}
+// try {
+//   require('dotenv').config()
+// } catch (e) {
+//   console.error('having trouble loading dotenv');
+//   return;
+// }
 
 // Attempt to import `sails`.
 var sails;
