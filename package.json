@@ -9,7 +9,7 @@
     "start": "node app.js",
     "test": "node ./node_modules/mocha/bin/mocha test/bootstrap.test.js test/integration/**/*.test.js",
     "prod_restart": "pm2 restart all",
-    "prod": "pm2 start app.js -i max -n mogul-api -x -- --prod"
+    "prod": "pm2 start app.js -n mogul-api -x -- --prod"
   },
   "main": "app.js",
   "repository": {
