@@ -8,7 +8,7 @@
     "debug": "node debug app.js",
     "start": "node app.js",
     "test": "node ./node_modules/mocha/bin/mocha test/bootstrap.test.js test/integration/**/*.test.js",
-    "prod": "pm2 start app.js -x -- --prod"
+    "prod": "pm2 start app.js -n mogul-api -x -- --prod"
   },
   "main": "app.js",
   "repository": {
