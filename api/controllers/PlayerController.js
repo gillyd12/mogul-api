@@ -17,7 +17,7 @@ module.exports = {
     var posQuery = {'!': '---'}
     var sortQuery = 'overall'
     var limitQuery = 200
-    var draftYearQuery = '2077'
+    var draftYearQuery = {'>': '1'}
     var simYearQuery = sails.config.simulation.year
     var simNumberQuery = sails.config.simulation.number
 
