@@ -29,19 +29,25 @@ module.exports.bootstrap = function (cb) {
   // todo -- bring these into configurations
   let inputFolder = 'input/data'
   let runDataLoad = false
+  // let fileName = ['2076-draft',
+  //                 '2077-draft',
+  //                 '2078-draft',
+  //                 '2077-1',
+  //                 '2077-2',
+  //                 '2077-3',
+  //                 '2077-4',
+  //                 '2077-5',
+  //                 '2077-6',
+  //                 '2077-7',
+  //                 '2077-8',
+  //                 '2077-9',
+  //                 '2077-10',
+  //                 '2077-11',
+  //                 '2077-12',
+  //                 '2077-13']
   let fileName = ['2077-1',
                   '2077-2',
-                  '2077-3',
-                  '2077-4',
-                  '2077-5',
-                  '2077-6',
-                  '2077-7',
-                  '2077-8',
-                  '2077-9',
-                  '2077-10',
-                  '2077-11',
-                  '2077-12',
-                  '2077-13']
+                  '2077-3']
 
   for (let file of fileName) {
     // set unique data for simulation
