@@ -36,12 +36,12 @@ module.exports = {
     if (req.query.simYear) {
       simYearQuery = req.query.simYear
     } else {
-      simYearQuery = sails.config.simulation.year
+      simYearQuery = sails.config.simulation.year.toString()
     }
     if (req.query.simNumber) {
       simNumberQuery = req.query.simNumber
     } else {
-      simNumberQuery = sails.config.simulation.number
+      simNumberQuery = sails.config.simulation.number.toString()
     }
     if (req.query.draftYear) {
       draftYearQuery = req.query.draftYear

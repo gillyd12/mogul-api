@@ -51,9 +51,20 @@ module.exports.bootstrap = function (cb) {
 
   Simulation.find({}).then(function (simulations, err) {
     if (simulations) {
-      let sorted = _.orderBy(simulations, ['simYear', 'simNumber'], ['desc', 'desc'])
-      sails.config.simulation.year = sorted[0].simYear
-      sails.config.simulation.number = sorted[0].simNumber
+      let sims = _.pullAllBy(simulations, [{ 'simNumber': 'draft' }], 'simNumber')
+      let arr = []
+      sims.map(function (item) {
+        let object = {
+          number: 0,
+          year: 0
+        }
+        object.number = parseInt(item.simNumber)
+        object.year = parseInt(item.simYear)
+        arr.push(object)
+      })
+      let sorted = _.orderBy(arr, ['year', 'number'], ['desc', 'desc'])
+      sails.config.simulation.year = sorted[0].year
+      sails.config.simulation.number = sorted[0].number
     }
   })
 
