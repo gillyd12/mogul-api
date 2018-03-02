@@ -9,61 +9,30 @@ let _ = require('lodash')
 module.exports = {
 
   find: function (req, res) {
-    // let payload = []
-    var ageQuery = {'>': '1'}
-    var throwsQuery = {'!': '---'}
-    var batsQuery = {'!': '---'}
-    var posQuery = {'!': '---'}
-    var sortQuery = 'overall'
-    var limitQuery = 200
-    var draftYearQuery = {'>': '1'}
-    var simYearQuery = {'>': '1'}
-    var simNumberQuery = {'>': '1'}
 
+    var age = {'>': '1'}
     if (req.query.age) {
       // req.query.age =
-      ageQuery = req.query.age.split(',')
+      age = req.query.age.split(',')
     }
-    if (req.query.throws) {
-      throwsQuery = req.query.throws
-    }
-    if (req.query.bats) {
-      batsQuery = req.query.bats
-    }
+    var position = {'!': '---'}
     if (req.query.position) {
-      posQuery = req.query.position.split(',')
-    }
-    if (req.query.simYear) {
-      simYearQuery = req.query.simYear
-    } else {
-      simYearQuery = sails.config.simulation.year.toString()
-    }
-    if (req.query.simNumber) {
-      simNumberQuery = req.query.simNumber
-    } else {
-      simNumberQuery = sails.config.simulation.number.toString()
-    }
-    if (req.query.draftYear) {
-      draftYearQuery = req.query.draftYear
-    }
-    if (req.query.limit) {
-      limitQuery = req.query.limit
-    }
-    if (req.query.sort) {
-      sortQuery = req.query.sort
+      position = req.query.position.split(',')
     }
 
-    Player.find({
-      age: ageQuery,
-      throws: throwsQuery,
-      bats: batsQuery,
-      position: posQuery,
-      simYear: simYearQuery,
-      simNumber: simNumberQuery,
-      draft_year: draftYearQuery,
-      limit: limitQuery,
-      sort: sortQuery + ' desc'
-    })
+    let query = {
+      name: req.param('name', {'!': '---'}),
+      age: age,
+      position: position,
+      throws: req.param('throws', {'!': '---'}),
+      bats: req.param('bats', {'!': '---'}),
+      simYear: req.param('simYear', {'>': '1'}),
+      simNumber: req.param('simNumber', sails.config.simulation.number.toString()),
+      draft_year: req.param('draftYear', {'>': '1'}),
+      limit: req.param('limit', 200),
+      sort: req.param('sort', 'overall') + ' desc'
+    }
+    Player.find(query)
       .then(function (players, err) {
         return res.json(players)
       })
