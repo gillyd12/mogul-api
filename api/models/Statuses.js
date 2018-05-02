@@ -13,7 +13,7 @@ module.exports = {
       type: 'string',
       defaultsTo: 'statuses'
     },
-    injury_time: {type: 'integer'},
+    injury_time: {type: 'number'},
     years_played: {type: 'string'},
     mlb_service: {type: 'string'},
     roster: {type: 'string'},

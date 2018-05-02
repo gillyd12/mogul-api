@@ -57,7 +57,7 @@ module.exports = {
     health: {type: 'string'},
     happiness: {type: 'string'},
     scouting: {type: 'string'},
-    injury_time: {type: 'integer'},
+    injury_time: {type: 'number'},
     years_played: {type: 'string'},
     mlb_service: {type: 'string'},
     roster: {type: 'string'},
@@ -202,7 +202,7 @@ module.exports = {
             Object.entries(player[0]).forEach(([key, value]) => {
               if (key === model.identity) {
                 value.add([model.id])
-                player[0].save(function (error) {
+                player[0].addToCollection(function (error) {
                   if (error && error !== undefined) {
                     reject(error)
                   }
