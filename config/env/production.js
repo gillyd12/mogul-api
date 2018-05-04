@@ -36,7 +36,7 @@ module.exports = {
   },
 
   models: {
-    connection: 'mongolabsBeta',
+    datastore: 'mongolabsBeta',
     migrate: 'safe'
   },
 

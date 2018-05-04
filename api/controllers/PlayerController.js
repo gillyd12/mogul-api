@@ -15,20 +15,22 @@ module.exports = {
       // req.query.age =
       age = req.query.age.split(',')
     }
-    var position = {'!': '---'}
+    var position = {'!=': '---'}
     if (req.query.position) {
       position = req.query.position.split(',')
     }
 
     let query = {
-      name: req.param('name', {'!': '---'}),
-      age: age,
-      position: position,
-      throws: req.param('throws', {'!': '---'}),
-      bats: req.param('bats', {'!': '---'}),
-      simYear: req.param('simYear', {'>': '1'}),
-      simNumber: req.param('simNumber', sails.config.simulation.number.toString()),
-      draft_year: req.param('draftYear', {'>': '1'}),
+      where: {
+        name: req.param('name', {'!=': '---'}),
+        age: age,
+        position: position,
+        throws: req.param('throws', {'!=': '---'}),
+        bats: req.param('bats', {'!=': '---'}),
+        simYear: req.param('simYear', {'>': '1'}),
+        simNumber: req.param('simNumber', sails.config.simulation.number.toString()),
+        draft_year: req.param('draftYear', {'>': '1'})
+      },
       limit: req.param('limit', 200),
       sort: req.param('sort', 'overall') + ' desc'
     }
