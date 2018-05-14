@@ -78,16 +78,17 @@ const setSimYearAndNumber = async () => {
   }
 }
 
-function store (file) {
+const store = async (file) => {
   // set unique data for simulation
   let d = _.split(file, '-', 2)
   sails.config.simulation.year = d[0]
   sails.config.simulation.number = d[1]
 
-  Promise.resolve(Simulation.init())
-    .catch(function (error) {
-      Promise.reject(sails.log.error(error))
-    })
+  try {
+    Simulation.init()
+  } catch (error) {
+    sails.log.error(error)
+  }
 
   // parse data
   var xlData = []
