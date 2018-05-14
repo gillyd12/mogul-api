@@ -33,24 +33,20 @@ module.exports = {
 
   },
 
-  init: function () {
-    return new Promise(function (resolve, reject) {
+  init: async function () {
+    try {
       let millis = m().valueOf()
       let date = m().toDate()
       sails.log.info('Loading Simulation')
-
-      Simulation.create({
+      await Simulation.create({
         simYear: sails.config.simulation.year,
         simNumber: sails.config.simulation.number,
         realLifeSimTime: millis,
         realLifeSimDate: date
-      }).then(function (data) {
-        resolve(data)
-      }).catch(function (error) {
-        sails.log.error(error.details)
-        reject(error)
       })
-    })
+    } catch (error) {
+      sails.log.error(error)
+    }
   }
 
 }
