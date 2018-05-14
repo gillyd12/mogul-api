@@ -187,32 +187,32 @@ module.exports = {
         })
       }
     })
-  },
-
-  addCollectionItem: function (model, obj) {
-    return new Promise(function (resolve, reject) {
-      let playerId = obj['Player Name'] + obj['Born'] + obj['Weight']
-
-      resolve(Player.find({player_id: playerId}).populate(model.identity)
-        .then(function (player) {
-          if (player && player !== undefined) {
-            if (model.identity === 'contract') {
-              player[0].currentTeam = model.organizational_roster
-            }
-            Object.entries(player[0]).forEach(([key, value]) => {
-              if (key === model.identity) {
-                value.add([model.id])
-                player[0].addToCollection(function (error) {
-                  if (error && error !== undefined) {
-                    reject(error)
-                  }
-                })
-                sails.log.info(model.identity + ' collection added with ' + model.id + ' added to player')
-              }
-            })
-          }
-        }))
-    })
   }
+
+  // addCollectionItem: function (model, obj) {
+  //   return new Promise(function (resolve, reject) {
+  //     let playerId = obj['Player Name'] + obj['Born'] + obj['Weight']
+  //
+  //     resolve(Player.find({player_id: playerId}).populate(model.identity)
+  //       .then(function (player) {
+  //         if (player && player !== undefined) {
+  //           if (model.identity === 'contract') {
+  //             player[0].currentTeam = model.organizational_roster
+  //           }
+  //           Object.entries(player[0]).forEach(([key, value]) => {
+  //             if (key === model.identity) {
+  //               value.add([model.id])
+  //               player[0].addToCollection(function (error) {
+  //                 if (error && error !== undefined) {
+  //                   reject(error)
+  //                 }
+  //               })
+  //               sails.log.info(model.identity + ' collection added with ' + model.id + ' added to player')
+  //             }
+  //           })
+  //         }
+  //       }))
+  //   })
+  // }
 
 }

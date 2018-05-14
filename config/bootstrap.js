@@ -43,32 +43,39 @@ module.exports.bootstrap = function (cb) {
       })
     }
   })
+  loadTeams()
+  setSimYearAndNumber()
+  cb()
+}
 
-  Promise.resolve(Team.init())
-    .catch(function (error) {
-      Promise.reject(sails.log.error(error))
+const loadTeams = async () => {
+  try {
+    Team.init()
+  } catch (error) {
+    sails.log.error(error)
+  }
+}
+
+const setSimYearAndNumber = async () => {
+  const simulations = await Simulation.find({})
+  if (simulations) {
+    let sims = _.pullAllBy(simulations, [{ 'simNumber': 'draft' }], 'simNumber')
+    let arr = []
+    sims.map(function (item) {
+      let object = {
+        number: 0,
+        year: 0
+      }
+      object.number = parseInt(item.simNumber)
+      object.year = parseInt(item.simYear)
+      arr.push(object)
     })
-
-  Simulation.find({}).then(function (simulations, err) {
-    if (simulations) {
-      let sims = _.pullAllBy(simulations, [{ 'simNumber': 'draft' }], 'simNumber')
-      let arr = []
-      sims.map(function (item) {
-        let object = {
-          number: 0,
-          year: 0
-        }
-        object.number = parseInt(item.simNumber)
-        object.year = parseInt(item.simYear)
-        arr.push(object)
-      })
-      let sorted = _.orderBy(arr, ['year', 'number'], ['desc', 'desc'])
+    let sorted = _.orderBy(arr, ['year', 'number'], ['desc', 'desc'])
+    if (sorted && sorted[0]) {
       sails.config.simulation.year = sorted[0].year
       sails.config.simulation.number = sorted[0].number
     }
-  })
-
-  cb()
+  }
 }
 
 function store (file) {
