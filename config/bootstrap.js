@@ -79,42 +79,36 @@ const setSimYearAndNumber = async () => {
 }
 
 const store = async (file) => {
-  // set unique data for simulation
-  let d = _.split(file, '-', 2)
-  sails.config.simulation.year = d[0]
-  sails.config.simulation.number = d[1]
-
   try {
+    // set unique data for simulation
+    let d = _.split(file, '-', 2)
+    sails.config.simulation.year = d[0]
+    sails.config.simulation.number = d[1]
+
     Simulation.init()
+
+    // parse data
+    var xlData = []
+    let workbook = XLSX.readFile(inputFolder + file + '.xls')
+    xlData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]])
+    console.log('Loading Players.')
+    let players = []
+    for (let values of xlData) {
+      let obj = {}
+      let propNames = Object.getOwnPropertyNames(values)
+
+      // ES6 For Of
+      for (let value of propNames) {
+        obj[_.trim(value)] = _.trim(values[value])
+      }
+      players.push(Player.load(obj))
+    }
+    workbook = null
+    xlData = null
+    await Player.createEach(players)
+    console.log('Loading Players Complete')
+    console.log('Parsing is completed.')
   } catch (error) {
     sails.log.error(error)
-  }
-
-  // parse data
-  var xlData = []
-  let workbook = XLSX.readFile(inputFolder + file + '.xls')
-  xlData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]])
-  for (let values of xlData) {
-    let obj = {}
-    let propNames = Object.getOwnPropertyNames(values)
-
-    // ES6 For Of
-    for (let value of propNames) {
-      obj[_.trim(value)] = _.trim(values[value])
-    }
-
-    async.series([
-      function (callback) {
-        console.log('loading player.')
-        Promise.resolve(Player.load(obj))
-          .catch(function (error) {
-            Promise.reject(sails.log.error(error))
-          })
-        callback()
-      },
-      function (callback) {
-        console.log('Parsing is completed.')
-      }
-    ])
   }
 }
