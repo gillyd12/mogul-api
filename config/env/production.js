@@ -34,10 +34,13 @@ module.exports = {
   log: {
     level: 'silent'
   },
-
+  environment: 'production',
   models: {
     datastore: 'mongolabsBeta',
     migrate: 'safe'
+  },
+  sockets: {
+    onlyAllowOrigins: ['http://localhost:1337']
   },
 
   liftTimeout: 30000

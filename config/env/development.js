@@ -17,6 +17,7 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 
+  environment: 'development',
   models: {
     datastore: 'mongolabsBeta',
     migrate: 'safe'
